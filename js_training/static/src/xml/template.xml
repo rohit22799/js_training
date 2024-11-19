@@ -1,0 +1,11 @@
+<templates>
+
+    <t t-name="js_training.CopyWidget" t-inherit="web.CharField">
+        <xpath expr="//input" position="after">
+            <button class="btn btn-primary" t-on-click="onClick">
+                Copy
+            </button>
+        </xpath>
+    </t>
+
+</templates>

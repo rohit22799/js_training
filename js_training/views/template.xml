@@ -33,6 +33,20 @@
                     <label for="exampleInputPassword1">State</label>
                     <select name="state_id" class="form-select"/>
                 </div>
+                <table class="one_2_many_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th/>
+                        </tr>
+                    </thead>
+                    <tbody/>
+                </table>
+                <button class="btn btn-primary add_new_line" type="button">
+                    Add A Line
+                </button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </t>

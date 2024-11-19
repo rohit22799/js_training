@@ -2,6 +2,10 @@
 
 import publicWidget from '@web/legacy/js/public/public_widget'; // Import Widget To Use For Basic Functionalities
 import { jsonrpc } from "@web/core/network/rpc_service"; // Import JSON For Invoking JSON Controllers
+import { One2manyLine } from "@js_training/js/components/line_dialog";
+import { _t } from "@web/core/l10n/translation";
+import { renderToElement } from "@web/core/utils/render";
+
 
 publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // CreatePartnerForm Name Of Widget Must Be Unique Otherwise Will Override Existing one
     selector: '#create_partner_form', // On Element Which This Widget Will Run -> selector with class or id or tag with unique attributes
@@ -10,6 +14,7 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
     events: {
         'change select[name="country_id"]': 'onChangeCountry', // 'Event_Name Element_Selector': 'Function_Name',
         'submit': 'onSubmit', // if not Element_Selector provided, will consider selector which is '#create_partner_form'
+        'click .add_new_line': 'onAddNewLine'
     },
 
     // Init Basically Used For Initializing Variables or Services Like ('dialog', 'notification', 'orm') or  At Initial Level Which Can Be Used Later on
@@ -17,6 +22,7 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
     init() {
         this._super(...arguments);
         this.notification = this.bindService("notification");
+        this.dialog = this.bindService("dialog");
     },
 
     // Start Function -> All The Process Want To DO In Starting Of Page
@@ -25,6 +31,22 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
         this.onChangeCountry();
     },
 
+    onAddNewLine: function(){
+        console.log('INSIDE ADD NEW LINE')
+        this.dialog.add(One2manyLine, {
+            title: _t("Add a Line"),
+            onClickSave: async (name) => {
+                console.log('on saveeeeeeeeeeeeeeeeeeeeeeeee',name)
+                const body = document.querySelector('.one_2_many_table > tbody');
+                const el = renderToElement('js_training.One2manyLineBody', {
+                    data: name
+                });
+                body.appendChild(el);
+
+            }
+        });
+
+    },
 
     onChangeCountry: function(){
         var countryId = document.querySelector('select[name="country_id"]').value;

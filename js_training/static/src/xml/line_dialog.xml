@@ -1,0 +1,31 @@
+<templates>
+
+    <t t-name="js_training.One2manyLine">
+        <Dialog title="this.props.title">
+            <div>
+                <label for="name">
+                    Name
+                </label>
+                <input t-ref="name_io" name="name" type="text" class="form-control"/>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onSave">
+                    Add
+                </button>
+                <button class="btn btn-primary" t-on-click="this.props.close">
+                    Close
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+    <t t-name="js_training.One2manyLineBody">
+        <tr>
+            <td>
+                <t t-esc="data"/>
+            </td>
+            <td></td>
+        </tr>
+    </t>
+
+</templates>
