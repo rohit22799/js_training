@@ -28,4 +28,10 @@ class JsTraining(http.Controller):
             'name': post.get('name'),
             'email': post.get('email'),
         })
+        if post.get('line_data'):
+            for line in post.get('line_data'):
+                request.env['res.partner'].sudo().create({
+                    'name': line,
+                    'parent_id': partner.id
+                })
         return partner.name

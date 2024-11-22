@@ -7,12 +7,20 @@ export class One2manyLine extends Component{
     static components = {}
     setup() {
         this.nameEl = useRef('name_io');
+        console.log(this,'.ttt',this.props)
     }
 
     onSave() {
-        console.log(this,'.aaaaaa')
         const name = this.nameEl.el.value;
-        this.props.onClickSave(name);
+        const toUpdate = this.props.trValue ? true: false;
+        //var toUpdate;
+        //  if(this.props.trValue){
+        //     toUpdate = true;
+        //  } else {
+        //      toUpdate = false;
+        //  }
+        // py -> true if this.props.value else false
+        this.props.onClickSave(name, toUpdate);
         this.props.close()
     }
 

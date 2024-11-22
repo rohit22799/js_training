@@ -14,7 +14,9 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
     events: {
         'change select[name="country_id"]': 'onChangeCountry', // 'Event_Name Element_Selector': 'Function_Name',
         'submit': 'onSubmit', // if not Element_Selector provided, will consider selector which is '#create_partner_form'
-        'click .add_new_line': 'onAddNewLine'
+        'click .add_new_line': 'onAddNewLine',
+        'click .delete_row': 'onDeleteRow',
+        'click .edit_row': 'onEditRow',
     },
 
     // Init Basically Used For Initializing Variables or Services Like ('dialog', 'notification', 'orm') or  At Initial Level Which Can Be Used Later on
@@ -32,11 +34,9 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
     },
 
     onAddNewLine: function(){
-        console.log('INSIDE ADD NEW LINE')
         this.dialog.add(One2manyLine, {
             title: _t("Add a Line"),
             onClickSave: async (name) => {
-                console.log('on saveeeeeeeeeeeeeeeeeeeeeeeee',name)
                 const body = document.querySelector('.one_2_many_table > tbody');
                 const el = renderToElement('js_training.One2manyLineBody', {
                     data: name
@@ -80,12 +80,51 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
         });
     },
 
+    onDeleteRow: function(e){
+        const target = e.currentTarget.closest('tr');
+        target.remove();
+    },
+
+    onEditRow: function(e){
+        const target = e.currentTarget.closest('tr');
+        this.dialog.add(One2manyLine, {
+            title: _t("Add a Line"),
+            trValue: target.querySelector('td[name="name"]').textContent,
+            onClickSave: async (name, toUpdate) => {
+                if(toUpdate){
+                    target.querySelector('td[name="name"]').textContent = name;
+                } else {
+                    const body = document.querySelector('.one_2_many_table > tbody');
+                    const el = renderToElement('js_training.One2manyLineBody', {
+                        data: name
+                    });
+                    body.appendChild(el);
+                }
+
+            }
+        });
+    },
+
+    prepareO2MData: function() {
+        const allTr = document.querySelectorAll('.one_2_many_table > tbody > tr');
+        var data = [];
+        allTr.forEach((tr) => {
+            data.push(tr.querySelector('td[name="name"]').textContent);
+            //data.push({
+            //    name: 'asd',
+            //    phone: '11111'
+            //})
+        });
+        return data;
+    },
+
     onSubmit: function(event){
         event.preventDefault(); // Will Prevent Functionality Of Submit. So It Will not Submit The Form and we can perform manually
         var countryId = document.querySelector('select[name="country_id"]').value;
         var stateId = document.querySelector('select[name="state_id"]').value;
         var name = document.querySelector('input[name="name"]').value;
         var email = document.querySelector('input[name="email"]').value;
+        var O2mData = this.prepareO2MData();
 
         if(countryId && stateId && name && email){
             jsonrpc('/create/partner/json', {
@@ -93,6 +132,7 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
                 state_id: stateId,
                 name: name,
                 email: email,
+                line_data: O2mData,
             }).then((result) => {
                 // Using Notification Service To Show the notification
                 this.notification.add(
@@ -112,4 +152,5 @@ publicWidget.registry.CreatePartnerForm = publicWidget.Widget.extend({ // Create
         );
         }
     },
+
 });

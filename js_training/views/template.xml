@@ -5,6 +5,9 @@
             <div>
                 Hello
             </div>
+            <button class="btn btn-primary hide_form" type="button">
+                Toggle Form
+            </button>
             <form id="create_partner_form" action="/create/partner/submit">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
@@ -33,7 +36,7 @@
                     <label for="exampleInputPassword1">State</label>
                     <select name="state_id" class="form-select"/>
                 </div>
-                <table class="one_2_many_table">
+                <table class="table one_2_many_table">
                     <thead>
                         <tr>
                             <th>

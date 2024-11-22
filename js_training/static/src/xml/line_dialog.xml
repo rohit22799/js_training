@@ -6,7 +6,7 @@
                 <label for="name">
                     Name
                 </label>
-                <input t-ref="name_io" name="name" type="text" class="form-control"/>
+                <input t-ref="name_io" name="name" type="text" t-att-value="this.props.trValue" class="form-control"/>
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-on-click="onSave">
@@ -21,10 +21,19 @@
 
     <t t-name="js_training.One2manyLineBody">
         <tr>
-            <td>
+            <td name="name">
                 <t t-esc="data"/>
             </td>
-            <td></td>
+            <td>
+                <button type="button" class="btn btn-danger edit_row">
+                    Edit
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger delete_row">
+                    Delete
+                </button>
+            </td>
         </tr>
     </t>
 

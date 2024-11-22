@@ -31,4 +31,3 @@ registry.category("fields").add("my_copy_widget", {
     ...charField,
     component: CopyWidget,
 });
-console.log(registry.category("fields"),'.registry.category("fields")')

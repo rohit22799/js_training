@@ -1,0 +1,10 @@
+<odoo>
+
+    <record id="contact_dashboard_main_action" model="ir.actions.client">
+        <field name="name">Contacts Dashboard</field>
+        <field name="tag">contacts_dashboard</field>
+    </record>
+
+    <menuitem name="Contact Dashboard" id="contact_dashboard_main" action="contact_dashboard_main_action"/>
+
+</odoo>

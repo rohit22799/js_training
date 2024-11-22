@@ -8,4 +8,24 @@
         </xpath>
     </t>
 
+    <t t-name="js_training.ContactDashboard">
+        <div>
+            <div>
+                <button type="button" class="btn btn-primary"
+                        t-on-click="onCreate">
+                    Create Contact
+                </button>
+            </div>
+            <t t-foreach="data" t-as="contact" t-key="contact.id">
+                <ContactCard contact="contact"/>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="js_training.ContactCard">
+        <div class="card">
+            <t t-esc="props.contact.name"/> - <t t-esc="props.contact.id"/>
+        </div>
+    </t>
+
 </templates>
